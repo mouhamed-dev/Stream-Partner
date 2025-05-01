@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire d'Abonnement - StreamPartner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9fafb;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+    .logo {
+      display: block;
+      width: 50%;
+      max-width: 200px;
+      margin: 20px auto 0;
+    }
+    h1 {
+      text-align: center;
+      color: #000;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .description {
+      font-size: 13px;
+      text-align: center;
+      line-height: 1.5;
+      margin-bottom: 20px;
+     }
+    .select-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin: 8px 0 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  text-align: left;
+  padding-left: 10px;
+  color: black; /* par défaut noir */
+  position: relative;
+}
+    .select-btn {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  title: attr(data-value);
+}
+/* Texte grisé quand le bouton a la classe .default */
+    .select-btn.default {
+      color: #9ba5b3;
+    }
+    label {
+      font-size: 16px;
+      color: #000;
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input[type="text"], .select-btn {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin: 8px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #ffffff;
+      box-sizing: border-box;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+      text-align: left;  /* Aligne le texte à gauche */
+      padding-left: 10px; /* Ajoute un espace à gauche */
+    }
+    button[type="submit"] {
+      background-color: #33b1b1;
+      color: white;
+      font-size: 16px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+      margin-bottom: 20px;
+      transition: background-color 0.6s ease;
+    }
+    button[type="submit"]:hover {
+      background-color: #29a09e;
+    }
+    .menu {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  z-index: 1000;
+  min-width: 250px; /* Taille minimale raisonnable */
+  max-width: 400px;
+  width: auto; /* Permet de s'adapter au contenu */
+  opacity: 0;
+  transform: scale(0.95);
+  transform-origin: top center;
+  transition: all 0.6s ease;
+  pointer-events: none;
+}
+    #country-code-btn {
+  width: 101px; /* Largeur fixe pour le bouton indicatif */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+    .menu.show {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+    #phone::placeholder {
+      color: #9ba5b3;
+    }
+    #name::placeholder {
+      color: #9ba5b3;
+    }
+    .select-btn::after {
+  content: "▼"; /* Petite flèche vers le bas */
+  position: absolute; /* Position absolue pour maintenir la flèche à droite */
+  right: 10px; /* Espace à droite */
+  top: 50%; /* Centrer verticalement */
+  transform: translateY(-50%); /* Centrer précisément */
+  font-size: 12px;
+  color: #666;
+}
+    .menu div {
+      padding: 10px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      color: black;  /* Assure que la couleur des textes dans le menu soit noire */
+    }
+    .menu div:hover {
+      background-color: #f0f0f0;
+      transform: scale(1.02);
+    }
+    .hidden {
+      display: none;
+    }
+    .row {  
+      display: flex;  
+      gap: 10px;  
+    }  
+    .row > div {  
+      flex: 1;  
+      position: relative;  
+    }  
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #888;
+      font-size: 14px;
+    }
+    .row > div:first-child {
+  flex: 0.5;
+}
+.row > div:last-child {
+  flex: 2;
+}
+    .footer a {
+      color: #33b1b1;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Logo -->
+<img src="https://tinypic.host/images/2025/04/25/ei_1745597950876-removebg-preview.png" alt="StreamPartner Logo" class="logo">
+
+<div class="container">
+  <h1><strong>FORMULAIRE D'ABONNEMENT STREAMPARTNER</strong></h1>
+
+  <div class="description" style="text-align: center; margin-top: 20px; line-height: 1.5;">
+    <p>
+      Veuillez remplir soigneusement toutes les informations ci-<br>
+      dessous, puis cliquez sur Aller au paiement pour effectuer votre<br>
+      paiement et finaliser votre souscription.<br>
+      <strong>Toutes les cases sont obligatoires.</strong>
+    </p>
+  </div>
+
+  <form id="subscription-form">
+
+    <!-- Nom et Prénom -->
+    <label for="name"><strong>Nom et Prénom :</strong></label>
+    <input type="text" id="name" name="name" required placeholder="Entrez votre Nom complet">
+
+    <!-- Indicatif + Numéro sur une même ligne -->
+    <label><strong>Numéro WhatsApp :</strong></label>
+    <div class="row">
+      <div>
+        <button id="country-code-btn" type="button" class="select-btn default">indicatif</button>
+        <div id="country-code-menu" class="menu hidden">
+          <div data-value="+237">🇨🇲 +237 (Cameroun)</div>
+<div data-value="+225">🇨🇮 +225 (Côte d'Ivoire)</div>
+<div data-value="+221">🇸🇳 +221 (Sénégal)</div>
+<div data-value="+242">🇨🇬 +242 (Congo)</div>
+<div data-value="+243">🇨🇩 +243 (RDC)</div>
+<div data-value="+223">🇲🇱 +223 (Mali)</div>
+<div data-value="+229">🇧🇯 +229 (Bénin)</div>
+<div data-value="+233">🇬🇭 +233 (Ghana)</div>
+<div data-value="+241">🇬🇦 +241 (Gabon)</div>
+        </div>
+        <input type="hidden" id="country-code" name="country-code">
+      </div>
+      <div>
+        <input type="text" id="phone" name="phone" required placeholder="Entrez votre numéro WhatsApp">
+      </div>
+    </div>
+
+    <!-- Plateforme -->
+    <label><strong>Plateforme d'abonnement :</strong></label>
+    <button id="platform-btn" type="button" class="select-btn default">Choisissez une plateforme</button>
+    <div id="platform-menu" class="menu hidden">
+      <div data-value="Netflix">Netflix</div>
+      <div data-value="Prime Video">Prime Video</div>
+      <div data-value="Spotify">Spotify</div>
+      <div data-value="Crunchyroll">Crunchyroll</div>
+      <div data-value="Apple Music">Apple Music</div>
+      <div data-value="Surfshark">Surfshark</div>
+      <div data-value="Onoff">Onoff</div>
+    </div>
+    <input type="hidden" id="platform" name="platform">
+
+    <!-- Durée -->
+    <label><strong>Durée de l'abonnement :</strong></label>
+    <button id="duration-btn" type="button" class="select-btn default">Choisissez la durée</button>
+    <div id="duration-menu" class="menu hidden">
+      <div data-value="1">1 Mois</div>
+      <div data-value="3">3 Mois</div>
+      <div data-value="6">6 Mois</div>
+      <div data-value="12">1 An</div>
+    </div>
+    <input type="hidden" id="duration" name="duration">
+
+    <strong><p id="price" style="margin-top: 10px; font-size: 20px; text-align: center; margin-bottom: 27px; font-weight: bold; color: #000;"></p><strong>
+
+    <!-- Bouton envoyer -->
+    <button type="submit" id="btnPaiement">Aller au paiement</button>
+
+  </form>
+
+  <div class="footer">
+    <p><strong>Pour toute question, contactez-nous :</strong></p>
+    <p><a href="https://wa.me/237621183801" target="_blank">Service Client WhatsApp</a></p>
+    <p><a href="mailto:streampartner1@gmail.com" target="_blank">contact@streampartner.com</a></p>
+    <p>© 2025 StreamPartner | Tous droits réservés.</p>
+  </div>
+
+</div>
+
+<script>
+ 
+  // Gestion dynamique des menus déroulants
+  function toggleMenu(buttonId, menuId) {
+    const button = document.getElementById(buttonId);
+    const menu = document.getElementById(menuId);
+
+    button.addEventListener('click', function () {
+      const menus = document.querySelectorAll('.menu');
+      menus.forEach(m => {
+        if (m !== menu) {
+          m.classList.remove('show');
+          m.classList.add('hidden');
+        }
+      });
+      menu.classList.toggle('hidden');
+      menu.classList.toggle('show');
+    });
+  }
+
+  function selectMenuItem(menuId, buttonId, inputId) {
+    const menu = document.getElementById(menuId);
+    const button = document.getElementById(buttonId);
+    const input = document.getElementById(inputId);
+
+    menu.querySelectorAll('div').forEach(item => {
+      item.addEventListener('click', function () {
+        const value = this.getAttribute('data-value');
+        const text = this.innerText;
+        button.textContent = text;
+        input.value = value;
+        menu.classList.remove('show');
+        menu.classList.add('hidden');
+        button.classList.remove('default');
+      });
+    });
+  }
+
+  // Appliquer aux 3 menus
+  toggleMenu('country-code-btn', 'country-code-menu');
+  toggleMenu('platform-btn', 'platform-menu');
+  toggleMenu('duration-btn', 'duration-menu');
+
+  selectMenuItem('country-code-menu', 'country-code-btn', 'country-code');
+  selectMenuItem('platform-menu', 'platform-btn', 'platform');
+selectMenuItem('duration-menu', 'duration-btn', 'duration');
+
+// Calcul du prix à chaque sélection
+document.getElementById('platform-menu').querySelectorAll('div').forEach(item => {
+  item.addEventListener('click', calculerPrix);
+});
+
+document.getElementById('duration-menu').querySelectorAll('div').forEach(item => {
+  item.addEventListener('click', calculerPrix);
+});
+
+  // Interaction sur tous les éléments de menu
+  document.querySelectorAll('.menu div').forEach(item => {
+    item.addEventListener('click', function() {
+      const button = item.closest('.row').querySelector('.select-btn');
+      button.textContent = item.textContent;
+      button.classList.add('selected');
+      document.getElementById(item.closest('.menu').id).classList.remove('show');
+    });
+  });
+
+  // Fermer tous les menus si clic en dehors
+  document.addEventListener('click', function (e) {
+    const isButton = e.target.closest('.select-btn');
+    if (!isButton) {
+      document.querySelectorAll('.menu.show').forEach(menu => {
+        menu.classList.remove('show');
+        menu.classList.add('hidden');
+      });
+    }
+  });
+
+   // Fonction pour calculer automatiquement le prix
+function calculerPrix() {
+  const platform = document.getElementById("platform").value;
+  const duration = parseInt(document.getElementById("duration").value);
+
+  const prixFixes = {
+    "Netflix": { 1: 2500, 3: 7000, 6: 13000, 12: 24000 },
+    "Prime Video": { 1: 2000, 3: 5500, 6: 10000, 12: 18000 },
+    "Spotify": { 1: 2000, 3: 5500, 6: 10000, 12: 18000 },
+    "Crunchyroll": { 1: 1500, 3: 4000, 6: 7000, 12: 12000 },
+    "Surfshark": { 1: 1500, 3: 4000, 6: 7000, 12: 14000 },
+    "Apple Music": { 1: 2000, 3: 5500, 6: 10000, 12: 18000 },
+    "Unoff": { 1: 7000, 3: 13000, 6: 24000, 12: 55000 }
+  };
+
+  const liensLygos = {
+    "Netflix": {
+      1: "https://pay.lygosapp.com//link/ffb4fee4-0ae3-4146-b0ee-5fb2fbe0289e",
+      3: "#",
+      6: "#",
+      12: "#"
+    },
+    "Prime Video": {
+      1: "https://pay.lygosapp.com//link/50198a26-df53-4c46-8320-e5a9c9a29fc2",
+      3: "#",
+      6: "#",
+      12: "#"
+    },
+    "Crunchyroll": {
+      1: "https://pay.lygosapp.com//link/c3caf0cc-d73d-4441-93f9-1fab6e445e41",
+      3: "#",
+      6: "#",
+      12: "#"
+    },
+    "Surfshark": {
+      1: "https://pay.lygosapp.com//link/15e1dcfc-2f3a-4587-bdb6-818728b97262",
+      3: "#",
+      6: "#",
+      12: "#"
+    },
+    "Apple Music": {
+      1: "https://pay.lygosapp.com//link/2f6a8e01-5b2d-4d1e-90f2-b3f201a06358",
+      3: "#",
+      6: "#",
+      12: "#"
+    },
+    "Spotify": {
+      1: "https://pay.lygosapp.com//link/dcec3fcd-41f8-410d-a810-786a2cc6bdd1",
+      3: "#",
+      6: "#",
+      12: "#"
+    },
+    "Unoff": {
+      1: "https://pay.lygosapp.com//link/4387062a-f5bd-4066-a816-32c3a5739fb7",
+      3: "#",
+      6: "#",
+      12: "#"
+    }
+  };
+
+  if (platform && duration && prixFixes[platform] && prixFixes[platform][duration]) {
+    const prix = prixFixes[platform][duration];
+    document.getElementById("price").textContent = `${prix.toLocaleString()} FCFA`;
+
+    const boutonPaiement = document.getElementById("btnPaiement");
+    boutonPaiement.disabled = false;
+    boutonPaiement.setAttribute("data-lien", liensLygos[platform][duration]);
+
+  } else {
+    document.getElementById("price").textContent = "";
+    document.getElementById("btnPaiement").disabled = true;
+  }
+}
+
+function allerAuPaiement() {
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const countryCode = document.getElementById("country-code").value;
+  const platform = document.getElementById("platform").value;
+  const duration = parseInt(document.getElementById("duration").value);
+
+  if (!name || !phone || !countryCode || !platform || !duration) {
+    alert("Tous les champs doivent être remplis !");
+    return;
+  }
+
+  const phonePattern = {
+    "+237": /^\d{9}$/,
+    "+225": /^\d{8}$/,
+    "+221": /^\d{9}$/,
+    "+242": /^\d{8}$/,
+    "+243": /^\d{9}$/,
+    "+223": /^\d{8}$/,
+    "+229": /^\d{8}$/,
+    "+233": /^\d{9}$/,
+    "+241": /^\d{8}$/,
+  };
+
+  if (!phonePattern[countryCode].test(phone)) {
+    alert(`Le numéro de téléphone pour ${countryCode} n'est pas valide.`);
+    return;
+  }
+
+  const fullPhone = countryCode + phone;
+  const data = {
+    nom: name,
+    telephone: fullPhone,
+    plateforme: platform,
+    duree: duration,
+    date: new Date().toISOString()
+  };
+
+  // Désactiver le bouton pendant l'envoi
+  const boutonPaiement = document.getElementById("btnPaiement");
+  boutonPaiement.disabled = true;
+  boutonPaiement.textContent = "Envoi en cours...";
+
+  // URL de votre script Google Apps Script
+  const url = "https://script.google.com/macros/s/AKfycbxjN6k7X-4AahF7ZvL6S6Wv4XdMNsVeu9PcpksY4VbnuAAHH6LIhxPnFmVbu281T3CW/exec";
+
+  // Envoi vers Google Sheet
+  fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("Erreur lors de l'enregistrement. Veuillez réessayer.");
+    }
+    return response.text();
+  })
+  .then(() => {
+    // Si tout est OK, rediriger vers le lien Lygos
+    const lien = boutonPaiement.getAttribute("data-lien");
+
+    if (lien && lien !== "#") {
+      window.open(lien, "_blank");
+    } else {
+      alert("Le lien de paiement pour cette durée n'est pas encore disponible.");
+    }
+  })
+  .catch(error => {
+    alert("Erreur : " + error.message);
+    boutonPaiement.disabled = false;
+    boutonPaiement.textContent = "Aller au paiement";
+  })
+  .finally(() => {
+    // Réactiver le bouton après 3 secondes même en cas d'erreur
+    setTimeout(() => {
+      boutonPaiement.disabled = false;
+      boutonPaiement.textContent = "Aller au paiement";
+    }, 3000);
+  });
+}
+
+document.getElementById("subscription-form").addEventListener("submit", function(event) {
+  event.preventDefault();
+  allerAuPaiement();
+});
+</script>
+</body>
+</html>
