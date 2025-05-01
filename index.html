@@ -272,141 +272,123 @@
 </div>
 
 <script>
- 
-  // Gestion dynamique des menus déroulants
-  function toggleMenu(buttonId, menuId) {
-    const button = document.getElementById(buttonId);
-    const menu = document.getElementById(menuId);
+// Gestion des menus déroulants
+function toggleMenu(buttonId, menuId) {
+  const button = document.getElementById(buttonId);
+  const menu = document.getElementById(menuId);
 
-    button.addEventListener('click', function () {
-      const menus = document.querySelectorAll('.menu');
-      menus.forEach(m => {
-        if (m !== menu) {
-          m.classList.remove('show');
-          m.classList.add('hidden');
-        }
-      });
-      menu.classList.toggle('hidden');
-      menu.classList.toggle('show');
+  button.addEventListener('click', function () {
+    const menus = document.querySelectorAll('.menu');
+    menus.forEach(m => {
+      if (m !== menu) {
+        m.classList.remove('show');
+        m.classList.add('hidden');
+      }
     });
-  }
+    menu.classList.toggle('hidden');
+    menu.classList.toggle('show');
+  });
+}
 
-  function selectMenuItem(menuId, buttonId, inputId) {
-    const menu = document.getElementById(menuId);
-    const button = document.getElementById(buttonId);
-    const input = document.getElementById(inputId);
+function selectMenuItem(menuId, buttonId, inputId) {
+  const menu = document.getElementById(menuId);
+  const button = document.getElementById(buttonId);
+  const input = document.getElementById(inputId);
 
-    menu.querySelectorAll('div').forEach(item => {
-      item.addEventListener('click', function () {
-        const value = this.getAttribute('data-value');
-        const text = this.innerText;
-        button.textContent = text;
-        input.value = value;
-        menu.classList.remove('show');
-        menu.classList.add('hidden');
-        button.classList.remove('default');
-      });
+  menu.querySelectorAll('div').forEach(item => {
+    item.addEventListener('click', function () {
+      const value = this.getAttribute('data-value');
+      const text = this.innerText;
+      button.textContent = text;
+      input.value = value;
+      menu.classList.remove('show');
+      menu.classList.add('hidden');
+      button.classList.remove('default');
     });
-  }
+  });
+}
 
-  // Appliquer aux 3 menus
-  toggleMenu('country-code-btn', 'country-code-menu');
-  toggleMenu('platform-btn', 'platform-menu');
-  toggleMenu('duration-btn', 'duration-menu');
+// Initialisation des menus
+toggleMenu('country-code-btn', 'country-code-menu');
+toggleMenu('platform-btn', 'platform-menu');
+toggleMenu('duration-btn', 'duration-menu');
 
-  selectMenuItem('country-code-menu', 'country-code-btn', 'country-code');
-  selectMenuItem('platform-menu', 'platform-btn', 'platform');
+selectMenuItem('country-code-menu', 'country-code-btn', 'country-code');
+selectMenuItem('platform-menu', 'platform-btn', 'platform');
 selectMenuItem('duration-menu', 'duration-btn', 'duration');
 
-// Calcul du prix à chaque sélection
-document.getElementById('platform-menu').querySelectorAll('div').forEach(item => {
-  item.addEventListener('click', calculerPrix);
-});
-
-document.getElementById('duration-menu').querySelectorAll('div').forEach(item => {
-  item.addEventListener('click', calculerPrix);
-});
-
-  // Interaction sur tous les éléments de menu
-  document.querySelectorAll('.menu div').forEach(item => {
-    item.addEventListener('click', function() {
-      const button = item.closest('.row').querySelector('.select-btn');
-      button.textContent = item.textContent;
-      button.classList.add('selected');
-      document.getElementById(item.closest('.menu').id).classList.remove('show');
+// Fermer les menus si clic en dehors
+document.addEventListener('click', function (e) {
+  const isButton = e.target.closest('.select-btn');
+  if (!isButton) {
+    document.querySelectorAll('.menu.show').forEach(menu => {
+      menu.classList.remove('show');
+      menu.classList.add('hidden');
     });
-  });
+  }
+});
 
-  // Fermer tous les menus si clic en dehors
-  document.addEventListener('click', function (e) {
-    const isButton = e.target.closest('.select-btn');
-    if (!isButton) {
-      document.querySelectorAll('.menu.show').forEach(menu => {
-        menu.classList.remove('show');
-        menu.classList.add('hidden');
-      });
-    }
-  });
+// Prix des abonnements
+const prixFixes = {
+  "Netflix": { 1: 2500, 3: 7000, 6: 13000, 12: 24000 },
+  "Prime Video": { 1: 2000, 3: 5500, 6: 10000, 12: 18000 },
+  "Spotify": { 1: 2000, 3: 5500, 6: 10000, 12: 18000 },
+  "Crunchyroll": { 1: 1500, 3: 4000, 6: 7000, 12: 12000 },
+  "Surfshark": { 1: 1500, 3: 4000, 6: 7000, 12: 14000 },
+  "Apple Music": { 1: 2000, 3: 5500, 6: 10000, 12: 18000 },
+  "Onoff": { 1: 7000, 3: 13000, 6: 24000, 12: 55000 }
+};
 
-   // Fonction pour calculer automatiquement le prix
+// Liens de paiement Lygos
+const liensLygos = {
+  "Netflix": {
+    1: "https://pay.lygosapp.com//link/ffb4fee4-0ae3-4146-b0ee-5fb2fbe0289e",
+    3: "#",
+    6: "#",
+    12: "#"
+  },
+  "Prime Video": {
+    1: "https://pay.lygosapp.com//link/50198a26-df53-4c46-8320-e5a9c9a29fc2",
+    3: "#",
+    6: "#",
+    12: "#"
+  },
+  "Crunchyroll": {
+    1: "https://pay.lygosapp.com//link/c3caf0cc-d73d-4441-93f9-1fab6e445e41",
+    3: "#",
+    6: "#",
+    12: "#"
+  },
+  "Surfshark": {
+    1: "https://pay.lygosapp.com//link/15e1dcfc-2f3a-4587-bdb6-818728b97262",
+    3: "#",
+    6: "#",
+    12: "#"
+  },
+  "Apple Music": {
+    1: "https://pay.lygosapp.com//link/2f6a8e01-5b2d-4d1e-90f2-b3f201a06358",
+    3: "#",
+    6: "#",
+    12: "#"
+  },
+  "Spotify": {
+    1: "https://pay.lygosapp.com//link/dcec3fcd-41f8-410d-a810-786a2cc6bdd1",
+    3: "#",
+    6: "#",
+    12: "#"
+  },
+  "Onoff": {
+    1: "https://pay.lygosapp.com//link/4387062a-f5bd-4066-a816-32c3a5739fb7",
+    3: "#",
+    6: "#",
+    12: "#"
+  }
+};
+
+// Calcul du prix
 function calculerPrix() {
   const platform = document.getElementById("platform").value;
   const duration = parseInt(document.getElementById("duration").value);
-
-  const prixFixes = {
-    "Netflix": { 1: 2500, 3: 7000, 6: 13000, 12: 24000 },
-    "Prime Video": { 1: 2000, 3: 5500, 6: 10000, 12: 18000 },
-    "Spotify": { 1: 2000, 3: 5500, 6: 10000, 12: 18000 },
-    "Crunchyroll": { 1: 1500, 3: 4000, 6: 7000, 12: 12000 },
-    "Surfshark": { 1: 1500, 3: 4000, 6: 7000, 12: 14000 },
-    "Apple Music": { 1: 2000, 3: 5500, 6: 10000, 12: 18000 },
-    "Unoff": { 1: 7000, 3: 13000, 6: 24000, 12: 55000 }
-  };
-
-  const liensLygos = {
-    "Netflix": {
-      1: "https://pay.lygosapp.com//link/ffb4fee4-0ae3-4146-b0ee-5fb2fbe0289e",
-      3: "#",
-      6: "#",
-      12: "#"
-    },
-    "Prime Video": {
-      1: "https://pay.lygosapp.com//link/50198a26-df53-4c46-8320-e5a9c9a29fc2",
-      3: "#",
-      6: "#",
-      12: "#"
-    },
-    "Crunchyroll": {
-      1: "https://pay.lygosapp.com//link/c3caf0cc-d73d-4441-93f9-1fab6e445e41",
-      3: "#",
-      6: "#",
-      12: "#"
-    },
-    "Surfshark": {
-      1: "https://pay.lygosapp.com//link/15e1dcfc-2f3a-4587-bdb6-818728b97262",
-      3: "#",
-      6: "#",
-      12: "#"
-    },
-    "Apple Music": {
-      1: "https://pay.lygosapp.com//link/2f6a8e01-5b2d-4d1e-90f2-b3f201a06358",
-      3: "#",
-      6: "#",
-      12: "#"
-    },
-    "Spotify": {
-      1: "https://pay.lygosapp.com//link/dcec3fcd-41f8-410d-a810-786a2cc6bdd1",
-      3: "#",
-      6: "#",
-      12: "#"
-    },
-    "Unoff": {
-      1: "https://pay.lygosapp.com//link/4387062a-f5bd-4066-a816-32c3a5739fb7",
-      3: "#",
-      6: "#",
-      12: "#"
-    }
-  };
 
   if (platform && duration && prixFixes[platform] && prixFixes[platform][duration]) {
     const prix = prixFixes[platform][duration];
@@ -415,13 +397,22 @@ function calculerPrix() {
     const boutonPaiement = document.getElementById("btnPaiement");
     boutonPaiement.disabled = false;
     boutonPaiement.setAttribute("data-lien", liensLygos[platform][duration]);
-
   } else {
     document.getElementById("price").textContent = "";
     document.getElementById("btnPaiement").disabled = true;
   }
 }
 
+// Écouteurs d'événements pour le calcul du prix
+document.getElementById('platform-menu').querySelectorAll('div').forEach(item => {
+  item.addEventListener('click', calculerPrix);
+});
+
+document.getElementById('duration-menu').querySelectorAll('div').forEach(item => {
+  item.addEventListener('click', calculerPrix);
+});
+
+// Validation et envoi du formulaire
 function allerAuPaiement() {
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
@@ -483,9 +474,7 @@ function allerAuPaiement() {
     return response.text();
   })
   .then(() => {
-    // Si tout est OK, rediriger vers le lien Lygos
     const lien = boutonPaiement.getAttribute("data-lien");
-
     if (lien && lien !== "#") {
       window.open(lien, "_blank");
     } else {
@@ -498,7 +487,6 @@ function allerAuPaiement() {
     boutonPaiement.textContent = "Aller au paiement";
   })
   .finally(() => {
-    // Réactiver le bouton après 3 secondes même en cas d'erreur
     setTimeout(() => {
       boutonPaiement.disabled = false;
       boutonPaiement.textContent = "Aller au paiement";
@@ -506,10 +494,12 @@ function allerAuPaiement() {
   });
 }
 
+// Écouteur d'événement pour la soumission du formulaire
 document.getElementById("subscription-form").addEventListener("submit", function(event) {
   event.preventDefault();
   allerAuPaiement();
 });
 </script>
+
 </body>
-</html>
+</html> 
